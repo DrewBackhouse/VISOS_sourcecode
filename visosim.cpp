@@ -102,7 +102,7 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
 // Function that averages elements of array B
 
 const int npoint = 44000;
-const int  n = 10;
+const int  n = 500;
 
 double* average(double* B[],int n){
 
