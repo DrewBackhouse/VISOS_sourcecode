@@ -39,7 +39,7 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
   //vector<double> Y;
   //vector<double> D;
   const int npoint = 44000;
-  double* A = (double*)malloc(npoint * 8 * 3);
+  double* B = (double*)malloc(npoint * 8 * 3);
 
   BargerPropagator *bNunue = new BargerPropagator();
   bNunue->UseMassEigenstates(false);
@@ -89,15 +89,37 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
     //X.push_back(t_X);
     //Y.push_back(t_Y);
     //D.push_back(distance);
-    A[ii]=t_X;
-    A[ii+44000]=t_Y;
-    A[ii+88000]=distance;
+    B[ii]=t_X;
+    B[ii+44000]=t_Y;
+    B[ii+88000]=distance;
     distance += distPoint;
   };
-
-  return A;
+    
+  return B;
 }
 
+
+// Function that averages elements of array B
+
+const int npoint = 44000;
+const int  n = 10;
+
+double* average(double* B[],int n){
+
+  double* A = (double*)malloc(npoint * 8 * 3);
+
+  for (int j=0; j<npoint-n; j++){
+
+    double sum = 0;
+    for (int i=j; i<n+j; i++){
+      sum = sum + *B[i];
+    }
+    A[j] = sum/((double)n);
+  }
+  return A;
+}
+	
+     
 EM_PORT_API(void) free_buf(void* buf) {
   free(buf);
 }
