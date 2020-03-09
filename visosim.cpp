@@ -63,16 +63,10 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
     bNunue->propagateLinear(nutype, distance, density);
     
     //probablity projection.
-    const double t_pnue_T = bNunue->GetProb( nutype, 1);
-    const double t_pnumu_T = bNunue->GetProb( nutype, 2);
-    const double t_pnutau_T = bNunue->GetProb( nutype, 3);
-    //const double t_sum_T = t_pnue_T + t_pnumu_T + t_pnutau_T;
-    // _T represrents theoretical value
-
-    //Experimental Error. Adding error so drop _T.
-    const double t_pnue = 0.5*t_pnue_T;
-    const double t_pnumu = 0.5*t_pnumu_T;
-    const double t_pnutau = 0.5*t_pnutau_T;
+    const double t_pnue = bNunue->GetProb( nutype, 1);
+    const double t_pnumu = bNunue->GetProb( nutype, 2);
+    const double t_pnutau = bNunue->GetProb( nutype, 3);
+    //const double t_sum = t_pnue + t_pnumu + t_pnutau;
 
 
     const double radangle = -135 * (M_PI/180);
@@ -96,7 +90,14 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
     //X.push_back(t_X);
     //Y.push_back(t_Y);
     //D.push_back(distance);
-    A[ii]=t_X;
+
+    //Expriemtal Error
+    //Here we will be adding a random uncertenry value to t_X and t_Y in a given percentage range (10% here).
+    const double t_X_E = t_X + 0.1*t_X*(rand() % 100 + -100)/100;
+
+
+    
+    A[ii]=t_X_E;
     A[ii+44000]=t_Y;
     A[ii+88000]=distance;
     distance += distPoint;
