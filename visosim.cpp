@@ -68,6 +68,11 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
     const double t_pnutau = bNunue->GetProb( nutype, 3);
     //const double t_sum = t_pnue + t_pnumu + t_pnutau;
 
+    //Experimental Error
+    const doubble t_pnue = 0.5*t_pnue;
+    const doubble t_pnumu = 0.5*t_pnumu;
+    const doubble t_pnutau = 0.5*t_pnutau;
+
 
     const double radangle = -135 * (M_PI/180);
     const double cosa = cos(radangle);
@@ -76,6 +81,7 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
     const double tmpX =  cosa * t_pnumu - sina * t_pnutau;
     const double tmpY =  sina * t_pnumu + cosa * t_pnutau + 1/sqrt(2);
     const double tmpZ =  t_pnue;
+    
 
     const double t_X = tmpX;
 
