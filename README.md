@@ -4,4 +4,4 @@ This repository contains the source code for VISOS. The VISOS code is generated 
 
 This branch is for adding an experimental error function into the VISOS sourcecode.
 
-v1.2: Changing point calculated probability to path averaged probability.
+v1.2.1: Changing point calculated probability to path averaged probability and implimenting it as a function which is called.
