@@ -40,6 +40,7 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
   //vector<double> D;
   const int npoint = 44000;
   double* B = (double*)malloc(npoint * 8 * 3);
+  double* A = (double*)malloc(npoint * 8 * 3);
 
   BargerPropagator *bNunue = new BargerPropagator();
   bNunue->UseMassEigenstates(false);
@@ -91,15 +92,14 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
     //D.push_back(distance);
     B[ii]=t_X;
     B[ii+44000]=t_Y;
-    B[ii+88000]=distance;
+    A[ii+88000]=distance;
     distance += distPoint;
   };
     
   //-----Function that calculates moving average of B and ouputs averaged array A-----
 
     //Initialise variables
-    const int WindowSize = 500;
-    double A[88000-WindowSize];
+    const int WindowSize = 2000;
     double sum =0;
 
     //For loop over elements of array, excluding the last number of elements corispomdingh to WindowSize
