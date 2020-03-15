@@ -57,44 +57,56 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
   
   const double distPoint = totaldistance/44000;
   double distance = 0;
-  
-  for(int ii=0; ii<npoint && distance<=totaldistance; ii++){
-    // Set PMNS and propagate with given distance
-    bNunue->propagateLinear(nutype, distance, density);
+  const double window = 10;
+  double sum = 0;
+  double sum_X = 0;
+  double sum_Y = 0;
+
+  for(int jj=0; jj< (npoint-window) && distance<=totaldistance; jj++){
+
+    sum = 0;
     
-    //probablity projection.
-    const double t_pnue = bNunue->GetProb( nutype, 1);
-    const double t_pnumu = bNunue->GetProb( nutype, 2);
-    const double t_pnutau = bNunue->GetProb( nutype, 3);
-    //const double t_sum = t_pnue + t_pnumu + t_pnutau;
-
-
-    const double radangle = -135 * (M_PI/180);
-    const double cosa = cos(radangle);
-    const double sina = sin(radangle);
-
-    const double tmpX =  cosa * t_pnumu - sina * t_pnutau;
-    const double tmpY =  sina * t_pnumu + cosa * t_pnutau + 1/sqrt(2);
-    const double tmpZ =  t_pnue;
-
-    const double t_X = tmpX;
-
-    const double radangle2 = -atan(sqrt(2));
-
-    const double cosa2 = cos(radangle2);
-    const double sina2 = sin(radangle2);
+    for(int ii=jj; ii<jj + window; ii++){
+      // Set PMNS and propagate with given distance
+      bNunue->propagateLinear(nutype, distance, density);
     
-    const double t_Y =  cosa2 * tmpY - sina2 * tmpZ;
-    //const double t_Z =  sina2 * tmpY + cosa2 * tmpZ;
-    //X.push_back(t_X);
-    //Y.push_back(t_Y);
-    //D.push_back(distance);
-    A[ii]=t_X;
-    A[ii+44000]=t_Y;
-    A[ii+88000]=distance;
+      //probablity projection.
+      const double t_pnue = bNunue->GetProb( nutype, 1);
+      const double t_pnumu = bNunue->GetProb( nutype, 2);
+      const double t_pnutau = bNunue->GetProb( nutype, 3);
+      //const double t_sum = t_pnue + t_pnumu + t_pnutau;
+
+
+      const double radangle = -135 * (M_PI/180);
+      const double cosa = cos(radangle);
+      const double sina = sin(radangle);
+
+      const double tmpX =  cosa * t_pnumu - sina * t_pnutau;
+      const double tmpY =  sina * t_pnumu + cosa * t_pnutau + 1/sqrt(2);
+      const double tmpZ =  t_pnue;
+
+      const double t_X = tmpX;
+
+      const double radangle2 = -atan(sqrt(2));
+
+      const double cosa2 = cos(radangle2);
+      const double sina2 = sin(radangle2);
+    
+      const double t_Y =  cosa2 * tmpY - sina2 * tmpZ;
+      //const double t_Z =  sina2 * tmpY + cosa2 * tmpZ;
+      //X.push_back(t_X);
+      //Y.push_back(t_Y);
+      //D.push_back(distance);
+      sum_X += t_X;
+      sum_Y += t_Y;
+    };
+
+    A[jj]= sum_X / window;
+    A[jj+44000]= sum_Y / window;
+    A[jj+88000]=distance;
     distance += distPoint;
-  };
-
+  }  
+    
   return A;
 }
 
