@@ -95,31 +95,23 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
     distance += distPoint;
   };
     
-  return B;
-}
+  //-----Function that calculates moving average of B and ouputs averaged array A-----
 
+    //Initialise variables
+    const int WindowSize = 500;
+    double A[88000-WindowSize];
+    double sum =0;
 
-//-----Function that calculates moving average of B and ouputs averaged array A-----
-
-double* average(double* B){
-
-  //Initialise variables
-  const int WindowSize = 500;
-  double* A[88000-WindowSize];
-  double sum =0;
-
-  //For loop over elements of array, excluding the last number of elements corispomdingh to WindowSize
+    //For loop over elements of array, excluding the last number of elements corispomdingh to WindowSize
     for (int i= 0; i<= (88000-WindowSize); i++){
       sum = 0; // Reset sum to zero
       //For loop over window
       for (int j = i; j < i + WindowSize; j++){
-	sum += *B[j];
+	sum += B[j];
       }
       A[i] = sum / (double)WindowSize; //Add averges to array 
       }
   return A;
-
-    
 }
 	
      
