@@ -33,7 +33,7 @@ using namespace std;
 #    endif
 #endif
 
-EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num3, double num4, double num5, double energy, double totaldistance ,int nutype, double density ) 
+EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num3, double num4, double num5, double energy, double totaldistance ,int nutype, double density, double error ) 
 {
   //vector<double> X;
   //vector<double> Y;
@@ -97,20 +97,34 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
   };
     
   //-----Function that calculates moving average of B and ouputs averaged array A-----
-
+  
     //Initialise variables
-    const int WindowSize = 2000;
     double sum =0;
-
+    //const int WindowSize = totaldistance * error / 100;
+    const int WindowSize = 2000;
+    
     //For loop over elements of array, excluding the last number of elements corispomdingh to WindowSize
-    for (int i= 0; i<= (88000-WindowSize); i++){
+
+    //Averging over x components
+    for (int i= 0; i<= (44000-WindowSize); i++){
       sum = 0; // Reset sum to zero
       //For loop over window
       for (int j = i; j < i + WindowSize; j++){
 	sum += B[j];
       }
-      A[i] = sum / (double)WindowSize; //Add averges to array 
+      A[i] = sum / (double)WindowSize; //Add averges to array
       }
+
+    //Averging over y components
+    for (int i= 44000; i<= (88000-WindowSize); i++){
+      sum = 0; // Reset sum to zero
+      //For loop over window
+      for (int j = i; j < i + WindowSize; j++){
+	sum += B[j];
+      }
+      A[i] = sum / (double)WindowSize; //Add averges to array
+      }
+    
   return A;
 }
 	
