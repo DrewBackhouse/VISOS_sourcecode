@@ -96,36 +96,43 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
     distance += distPoint;
   };
     
-  //-----Function that calculates moving average of B and ouputs averaged array A-----
+  //-----Function that calculates moving average of B and ouputs averaged  array A-----
   
     //Initialise variables
     double sum =0;
     //const int WindowSize = totaldistance * error / 100;
     const int WindowSize = 2000;
     
-    //For loop over elements of array, excluding the last number of elements corispomdingh to WindowSize
+    //For loop over elements of array, excluding the last number of elements corisponding to WindowSize
 
-    //Averging over x components
+    //Averaging over x components
     for (int i= 0; i<= (44000-WindowSize); i++){
       sum = 0; // Reset sum to zero
+
       //For loop over window
       for (int j = i; j < i + WindowSize; j++){
-	sum += B[j];
+	sum += B[j]; //Adds value to the sum
       }
       A[i] = sum / (double)WindowSize; //Add averges to array
       }
 
-    //Averging over y components
+    //Averaging over y components
     for (int i= 44000; i<= (88000-WindowSize); i++){
       sum = 0; // Reset sum to zero
+
       //For loop over window
       for (int j = i; j < i + WindowSize; j++){
-	sum += B[j];
+	sum += B[j]; //Adds value to the sum
       }
       A[i] = sum / (double)WindowSize; //Add averges to array
       }
-    
-  return A;
+
+    //Setting unused distance elements to zero since data points have reduced.
+    //for(int k= (131999 - WindowSize); k< 132000; k++){
+    //A[k]=0;
+    //}
+
+    return A;
 }
 	
      
