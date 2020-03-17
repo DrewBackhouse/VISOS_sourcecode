@@ -103,7 +103,7 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
     //const int WindowSize = totaldistance * error / 100;
     const int WindowSize = 10000;
     
-    //For loop over elements of array, excluding the last number of elements corispomdingh to WindowSize
+    //For loop over elements of array, excluding the last number of elements corisponding to WindowSize
 
     //Averging over x components
     for (int i= 0; i<= (44000-WindowSize); i++){
@@ -112,10 +112,17 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
       for (int j = i; j < i + WindowSize; j++){
 	sum += B[j];
       }
-      A[i+(WindowSize/2)] = sum / (double)WindowSize; //Add averges to array
+      A[i+(WindowSize/2)] = sum / (double)WindowSize; //Add averges to array. Shifts values by half window size to preserve symetries.
 
+      //if statemet to check for first element and repeat this value over null entries.
       if (i==0){
 	for (int k=0; k < (WindowSize/2); k++){
+	  A[k]= sum / (double)WindowSize;
+	}
+      }
+      //if statemet to check for last element and repeat this value over null entries
+      if (i==(44000-WindowSize)){
+	for (int k=(44000-WindowSize/2); k < (44000); k++){
 	  A[k]= sum / (double)WindowSize;
 	}
       }
@@ -128,10 +135,17 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
       for (int j = i; j < i + WindowSize; j++){
 	sum += B[j];
       }
-      A[i+(WindowSize/2)] = sum / (double)WindowSize; //Add averges to array
+      A[i+(WindowSize/2)] = sum / (double)WindowSize; //Add averges to array. Shifts values by half window size to preserve symetries
 
+       //if statemet to check for first element and repeat this value over null entries.
       if (i==44000){
 	for (int k=44000; k < (44000 + WindowSize/2); k++){
+	  A[k]= sum / (double)WindowSize;
+	}
+      }
+       //if statemet to check for last element and repeat this value over null entries.
+      if (i==(88000-WindowSize)){
+	for (int k=(88000-WindowSize/2); k < (88000); k++){
 	  A[k]= sum / (double)WindowSize;
 	}
       }
