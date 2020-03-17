@@ -101,7 +101,7 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
     //Initialise variables
     double sum =0;
     //const int WindowSize = totaldistance * error / 100;
-    const int WindowSize = 2000;
+    const int WindowSize = 10000;
     
     //For loop over elements of array, excluding the last number of elements corispomdingh to WindowSize
 
@@ -112,8 +112,14 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
       for (int j = i; j < i + WindowSize; j++){
 	sum += B[j];
       }
-      A[i] = sum / (double)WindowSize; //Add averges to array
+      A[i+(WindowSize/2)] = sum / (double)WindowSize; //Add averges to array
+
+      if (i==0){
+	for (int k=0; k <= (WindowSize); k++){
+	  A[i]= sum / (double)WindowSize;
+	}
       }
+    }
 
     //Averging over y components
     for (int i= 44000; i<= (88000-WindowSize); i++){
@@ -122,8 +128,14 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
       for (int j = i; j < i + WindowSize; j++){
 	sum += B[j];
       }
-      A[i] = sum / (double)WindowSize; //Add averges to array
+      A[i+(WindowSize/2)] = sum / (double)WindowSize; //Add averges to array
+
+      if (i==44000){
+	for (int k=44000; k <= (44000 + WindowSize); k++){
+	  A[i]= sum / (double)WindowSize;
+	}
       }
+    }
     
   return A;
 }
