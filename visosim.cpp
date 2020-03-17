@@ -115,8 +115,8 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
       A[i+(WindowSize/2)] = sum / (double)WindowSize; //Add averges to array
 
       if (i==0){
-	for (int k=0; k <= (WindowSize); k++){
-	  A[i]= sum / (double)WindowSize;
+	for (int k=0; k < (WindowSize/2); k++){
+	  A[k]= sum / (double)WindowSize;
 	}
       }
     }
@@ -131,8 +131,8 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
       A[i+(WindowSize/2)] = sum / (double)WindowSize; //Add averges to array
 
       if (i==44000){
-	for (int k=44000; k <= (44000 + WindowSize); k++){
-	  A[i]= sum / (double)WindowSize;
+	for (int k=44000; k < (44000 + WindowSize/2); k++){
+	  A[k]= sum / (double)WindowSize;
 	}
       }
     }
