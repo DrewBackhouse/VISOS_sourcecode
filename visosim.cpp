@@ -113,8 +113,21 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
       for (int j = i; j < i + WindowSize; j++){
 	sum += B[j]; //Adds value to the sum
       }
-      A[i] = sum / (double)WindowSize; //Add averges to array
+      A[i+(WindowSize/2)] = sum / (double)WindowSize; //Add averges to array. Shifts values by half window size to preserve symetries.
+
+      //if statemet to check for first element and repeat this value over null entries.
+      if (i==0){
+	for (int k=0; k < (WindowSize/2); k++){
+	  A[k]= sum / (double)WindowSize;
+	}
       }
+      //if statemet to check for last element and repeat this value over null entries
+      if (i==(44000-WindowSize)){
+	for (int k=(44000-WindowSize/2); k < (44000); k++){
+	  A[k]= sum / (double)WindowSize;
+	}
+      }
+    }
 
     //Averaging over y components
     for (int i= 44000; i<= (88000-WindowSize); i++){
@@ -124,15 +137,26 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
       for (int j = i; j < i + WindowSize; j++){
 	sum += B[j]; //Adds value to the sum
       }
-      A[i] = sum / (double)WindowSize; //Add averges to array
+      A[i+(WindowSize/2)] = sum / (double)WindowSize; //Add averges to array. Shifts values by half window size to preserve symetries
+
+       //if statemet to check for first element and repeat this value over null entries.
+      if (i==44000){
+	for (int k=44000; k < (44000 + WindowSize/2); k++){
+	  A[k]= sum / (double)WindowSize;
+	}
       }
-
-    //Setting unused distance elements to zero since data points have reduced.
-    //for(int k= (131999 - WindowSize); k< 132000; k++){
-    //A[k]=0;
-    //}
-
-    return A;
+       //if statemet to check for last element and repeat this value over null entries.
+      if (i==(88000-WindowSize)){
+	for (int k=(88000-WindowSize/2); k < (88000); k++){
+	  A[k]= sum / (double)WindowSize;
+	}
+      }
+<<<<<<< HEAD
+=======
+    }
+    
+  return A;
+>>>>>>> v1.2.2
 }
 	
      
