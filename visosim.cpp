@@ -101,7 +101,7 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
     //Initialise variables
     double sum =0;
     //const int WindowSize = totaldistance * error / 100;
-    const int WindowSize = 10000;
+    const int WindowSize = 2000;
     
     //For loop over elements of array, excluding the last number of elements corisponding to WindowSize
 
