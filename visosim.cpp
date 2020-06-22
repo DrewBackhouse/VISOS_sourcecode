@@ -33,7 +33,7 @@ using namespace std;
 #    endif
 #endif
 
-EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num3, double num4, double num5, double energy, double totaldistance ,int nutype, double density, double error ) 
+EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num3, double num4, double num5, double energy, double totaldistance ,int nutype, double density) 
 {
   //vector<double> X;
   //vector<double> Y;
@@ -151,12 +151,9 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
 	  A[k]= sum / (double)WindowSize;
 	}
       }
-<<<<<<< HEAD
-=======
     }
     
   return A;
->>>>>>> v1.2.2
 }
 	
      
