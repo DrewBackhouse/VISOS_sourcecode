@@ -151,9 +151,12 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
 	  A[k]= sum / (double)WindowSize;
 	}
       }
+<<<<<<< HEAD
+=======
     }
     
   return A;
+>>>>>>> v1.2.2
 }
 	
      
