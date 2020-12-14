@@ -101,7 +101,7 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
     //Initialise variables
     double sum =0;
     //double error2 = 30;
-    const int WindowSize = 44000 * error / 100;
+    const int WindowSize = 1+44000 * error / 100; //1+ to avoid probelm when error=0.
     //const int WindowSize = 1;
     
     //For loop over elements of array, excluding the last number of elements corisponding to WindowSize
