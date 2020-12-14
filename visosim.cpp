@@ -33,7 +33,7 @@ using namespace std;
 #    endif
 #endif
 
-EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num3, double num4, double num5, double energy, double totaldistance ,int nutype, double density) 
+EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num3, double num4, double num5, double energy, double totaldistance ,int nutype, double density, double error) 
 {
   //vector<double> X;
   //vector<double> Y;
@@ -100,8 +100,9 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
   
     //Initialise variables
     double sum =0;
-    //const int WindowSize = totaldistance * error / 100;
-    const int WindowSize = 2000;
+    //double error2 = 30;
+    const int WindowSize = 44000 * error / 100;
+    //const int WindowSize = 1;
     
     //For loop over elements of array, excluding the last number of elements corisponding to WindowSize
 
@@ -155,7 +156,6 @@ EM_PORT_API(double*) Propagate(double num0, double num1, double num2, double num
     
   return A;
 }
-	
      
 EM_PORT_API(void) free_buf(void* buf) {
   free(buf);
